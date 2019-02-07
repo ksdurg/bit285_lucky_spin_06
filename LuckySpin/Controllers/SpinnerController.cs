@@ -4,21 +4,24 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using LuckySpin.Models;
+using LuckySpin.ViewModels;
 
 namespace LuckySpin.Controllers
 {
     public class SpinnerController : Controller
     {
         private LuckySpinDataContext _dbc;
+        private LuckListViewModel _llvm;
         Random random;
 
         /***
          * Controller Constructor
          */
-        public SpinnerController()
+        public SpinnerController(LuckySpinDataContext luckyspin )
         {
             random = new Random();
             //TODO: Inject the LuckySpinDataContext
+            _dbc = luckyspin;
         }
 
         /***
@@ -37,11 +40,19 @@ namespace LuckySpin.Controllers
             if (!ModelState.IsValid) { return View(); }
 
             // TODO: Add the Player to the DB and save the changes
+            _dbc.Players.Add(player);
+            _dbc.SaveChanges();
 
             // TODO: BONUS: Build a new SpinItViewModel object with data from the Player and pass it to the View
+            SpinViewModel svm = new SpinViewModel();
+            svm.Balance = player.Balance;
+            svm.Luck = player.Luck;
+            svm.
+
 
             return RedirectToAction("SpinIt");
         }
+    }
 
         /***
          * Spin Action

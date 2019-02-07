@@ -29,6 +29,7 @@ namespace LuckySpin
             services.AddMvc();
             services.AddTransient<Models.TextTransformService>();
             //services.AddSingleton<Models.Repository>();
+            
 
             services.AddDbContext<Models.LuckySpinDataContext>(options =>
             {
